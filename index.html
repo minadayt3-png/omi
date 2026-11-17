@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Omi – Sinhala Card Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--w:min(15vw,62px);--g:#d9a93c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{height:100%;margin:0;overflow:hidden;font-family:Georgia,'Noto Serif Sinhala',serif;color:#fbf3dc;background:#0b3d2a;-webkit-user-select:none;user-select:none}
+#app{position:relative;height:100%;background:radial-gradient(ellipse at center,#14684a 0,#0b3d2a 65%,#06241a 100%);overflow:hidden}
+#app:before{content:"";position:absolute;inset:6px;border:2px solid var(--g);border-radius:18px;opacity:.5;pointer-events:none}
+.c{width:var(--w);height:calc(var(--w)*1.42);border-radius:7px;background:#f8efd6;color:#1a1a1a;border:2px solid #b8892b;box-shadow:inset 0 0 0 2px #f8efd6,inset 0 0 0 3px #a8132a,0 3px 6px #0008;position:relative;flex:none;font-weight:700;font-size:calc(var(--w)*.3)}
+.c.r{color:#b3121f}.c i{position:absolute;font-style:normal;line-height:1;text-align:center;left:15%;top:9%}
+.c i.b2{left:auto;top:auto;right:15%;bottom:9%;transform:rotate(180deg)}
+.c b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--w)*.75);opacity:.9}
+.c.k{background:radial-gradient(circle,#f3d27a 0 7%,#a8132a 8% 14%,transparent 15%),repeating-conic-gradient(from 0deg,#1b3a7a 0 12deg,#a8132a 12deg 24deg);border:2px solid #f3d27a;box-shadow:inset 0 0 0 3px #f6ead0,inset 0 0 0 5px #1b3a7a,0 3px 6px #0008}
+.c.k:after{content:"❀";position:absolute;inset:20% 14%;border:2px solid #f3d27a;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#f3d27a;font-size:calc(var(--w)*.5);background:#1b3a7a;box-shadow:0 0 0 2px #a8132a}
+.c.ct b{inset:20% 22%;border:2px solid #8a1c2b;border-radius:5px;background:repeating-linear-gradient(45deg,#f1d98f 0 4px,#f8efd6 4px 8px);font-size:calc(var(--w)*.5)}
+.c.ct b:before{content:"";position:absolute;inset:2px;border:1px solid #b8892b;border-radius:3px}
+.c.ok{cursor:pointer;transform:translateY(-10px)}.c.no{filter:brightness(.55)}
+.hand{position:absolute;left:0;right:0;bottom:30px;display:flex;justify-content:center;padding:0 8px}
+.hand .c{margin-left:calc(var(--w)*-.45);transition:transform .15s}.hand .c:first-child{margin-left:0}
+.op{position:absolute;display:flex}.op .c{--w:min(8vw,34px);margin-left:calc(var(--w)*-.7)}
+.op.p1{left:8px;top:50%;flex-direction:column;transform:translateY(-45%)}.op.p3{right:8px;top:50%;flex-direction:column;transform:translateY(-45%)}
+.op.p1 .c,.op.p3 .c{margin-left:0;margin-top:calc(var(--w)*-1)}.op.p2{top:42px;left:50%;transform:translateX(-30%)}
+.nm{position:absolute;font-size:14px;padding:4px 12px;border-radius:12px;background:#0007;border:1px solid #d9a93c66;font-size:13px;white-space:nowrap}
+.nm.on{border-color:#ffe08a;box-shadow:0 0 12px #ffe08a;background:#6b0f1d}
+.n0{bottom:calc(var(--w)*1.42 + 42px);left:50%;transform:translateX(-50%)}.n1{left:6px;top:calc(50% - 90px)}.n2{top:12px;left:50%;transform:translateX(-50%)}.n3{right:6px;top:calc(50% - 90px)}
+#mid{position:absolute;left:50%;top:46%;width:0;height:0}
+#mid .c{position:absolute;left:calc(var(--w)*-.5);top:calc(var(--w)*-.7)}
+.t0{transform:translate(0,calc(var(--w)*.55))}.t1{transform:translate(calc(var(--w)*-.7),0) rotate(-6deg)}.t2{transform:translate(0,calc(var(--w)*-.55))}.t3{transform:translate(calc(var(--w)*.7),0) rotate(6deg)}
+.in0{animation:i0 .4s}@keyframes i0{from{transform:translate(0,45vh)}}.in1{animation:i1 .4s}@keyframes i1{from{transform:translate(-45vw,0)}}
+.in2{animation:i2 .4s}@keyframes i2{from{transform:translate(0,-45vh)}}.in3{animation:i3 .4s}@keyframes i3{from{transform:translate(45vw,0)}}
+.hud{position:absolute;font-size:13px;line-height:1.5;background:#000a;border:1px solid #d9a93c66;border-radius:10px;padding:5px 8px}
+#tl{top:14px;left:14px}#tr{top:14px;right:14px;text-align:right}#bl,#br{bottom:calc(var(--w)*1.42 + 48px)}#bl{left:10px}#br{right:10px;text-align:right}#bl b{font-size:16px;color:#ffe08a;margin:0 4px}.mini.o span{background:#1b3a7a}
+.coin{display:inline-block;width:14px;height:14px;border-radius:50%;margin:1px;border:2px solid var(--g);box-shadow:inset 0 0 0 2px #0006}.coin.bk{background:#151515}.coin.rd{background:#b3121f}
+.mini{display:inline-block;width:20px;height:28px;margin:1px;position:relative}.mini span{position:absolute;width:12px;height:16px;border-radius:2px;border:1px solid var(--g);background:#8a1428}
+.mini span:nth-child(1){left:0;top:0}.mini span:nth-child(2){left:4px;top:3px}.mini span:nth-child(3){left:8px;top:6px}.mini span:nth-child(4){left:5px;top:10px}
+#msg{position:absolute;top:58px;left:50%;transform:translateX(-50%);max-width:60%;text-align:center;font-size:13px;color:#ffe08a;pointer-events:none}
+#ft{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:10px;opacity:.7}
+.pan{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);background:#000b;border:2px solid var(--g);border-radius:16px;padding:14px;text-align:center;z-index:5;width:min(86vw,330px)}
+button,input{font:inherit;border-radius:10px;border:2px solid var(--g);padding:8px 12px;margin:4px;background:#6b0f1d;color:#fbf3dc}button{cursor:pointer}input{background:#fff;color:#111;width:70%}
+.su{font-size:26px;background:#fbf3dc;color:#111;padding:2px 12px}.su.r{color:#b3121f}
+#lob{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:9;background:#06241af0}
+#lob>div{text-align:center;width:min(90vw,360px)}h1{margin:0 0 4px;color:var(--g);font-size:40px}
+</style></head><body><div id="app"></div>
+<script>
+const SU=['♠','♥','♦','♣'],RK={11:'J',12:'Q',13:'K',14:'A'},BN=['Kamal','Nimal','Sunil','Saman','Kumari','Nadeeka','Chamari','Ruwan','Lasith','Dilshan','Pradeep','Anura','Sanduni','Kasun','Thilini'];
+const $=s=>document.querySelector(s),app=$('#app'),esc=s=>String(s).replace(/[<>&"]/g,'');
+let S=null,room=null,host=false,my=0,uid=Math.random().toString(36).slice(2),nm='',bt,pick=false,prevLen=0,code='';
+const CG={11:'♞',12:'♛',13:'♚'};
+const card=(c,cls='',i)=>{const rd=c.s==1||c.s==2,k=RK[c.r]||c.r,ct=c.r>=11;return `<div class="c ${rd?'r':''} ${ct?'ct':''} ${cls}" ${i!=null?`data-i="${i}"`:''}><i>${k}<br>${SU[c.s]}</i><b>${ct&&c.r<14?CG[c.r]+'':SU[c.s]}</b><i class="b2">${k}<br>${SU[c.s]}</i></div>`};
+const back=(cls='')=>`<div class="c k ${cls}"></div>`;
+const stk=n=>n?'<span class="mini"><span></span><span></span><span></span><span></span></span>'.repeat(n):'–';
+const coins=(n,t)=>`<span class="coin ${t?'rd':'bk'}"></span>`.repeat(n);
+const val=(c,l)=>(c.s===S.trump?100:c.s===l?0:-100)+c.r;
+const legal=(t,c)=>{const l=S.trick.length?S.trick[0].c.s:null;return l===null||c.s===l||!S.h[t].some(x=>x.s===l)};
+function bc(){if(room)room.emit('state',{S})}
+function sync(){bc();render()}
+function lobby(){
+ app.innerHTML=`<div id="lob"><div><h1>ඔම්මි Omi</h1><div style="opacity:.8;margin-bottom:10px">Sri Lankan card game</div>
+ <input id="nm" placeholder="Your name" maxlength="14"><div><button id="solo">Play vs bots</button><button id="hst">Host a room</button></div>
+ <div><input id="cd" placeholder="Room code" style="width:40%"><button id="jn">Join</button></div><div id="st" style="font-size:12px;margin-top:8px"></div></div></div><div id="ft">made by Minada</div>`;
+ const n=()=>(nm=esc($('#nm').value.trim())||'Player');
+ $('#solo').onclick=()=>{n();host=true;initGame();start()};
+ $('#hst').onclick=async()=>{n();code=String(1000+Math.random()*9000|0);if(await conn()){host=true;initGame();$('#st').textContent='';render()}};
+ $('#jn').onclick=async()=>{n();code=$('#cd').value.trim();if(!code)return;if(await conn()){host=false;hello();$('#st').textContent='Joining…'}};
+}
+function mkRoom(c){const es=new EventSource('/ev?room='+encodeURIComponent(c));
+ return{on:(t,f)=>es.addEventListener(t,e=>{const m=JSON.parse(e.data);m.isMe=m.from===uid;f(m)}),
+ emit:(t,d)=>fetch('/emit?room='+encodeURIComponent(c),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic:t,data:d,from:uid})})}}
+async function conn(){try{room=mkRoom(code);
+ room.on('state',m=>{if(host||m.isMe)return;S=m.data.S;const s=S.seatOf[uid];if(s!=null)my=s;render()});
+ room.on('hello',m=>{if(!host)return;const d=m.data;if(S.seatOf[d.uid]==null&&S.phase=='lobby'){const f=[2,1,3].find(i=>!S.human[i]);if(f==null)return;S.human[f]=1;S.names[f]=d.name;S.seatOf[d.uid]=f}bc()});
+ room.on('act',m=>{if(host)handle(m.data.seat,m.data.a)});
+ setInterval(()=>{if(host)bc();else if(S&&S.seatOf[uid]==null)hello()},3000);return true}catch(e){$('#st').textContent='Could not connect.';return false}}
+function hello(){room.emit('hello',{uid,name:nm})}
+function initGame(){S={phase:'lobby',names:[nm,'','',''],human:[1,0,0,0],seatOf:{[uid]:0},got:[0,0],pot:0,ch:Math.random()*4|0,tk:[0,0],won:[0,0],trick:[],h:[[],[],[],[]],trump:null,msg:''};my=0}
+function start(){let b=BN.slice().sort(()=>Math.random()-.5);S.names=S.names.map(n=>n||b.pop());deal()}
+function deal(){let d=[];for(let s=0;s<4;s++)for(let r=7;r<15;r++)d.push({s,r});
+ for(let i=31;i>0;i--){let j=Math.random()*(i+1)|0;[d[i],d[j]]=[d[j],d[i]]}
+ S.h=[0,1,2,3].map(i=>d.slice(i*4,i*4+4));S.later=[0,1,2,3].map(i=>d.slice(16+i*4,20+i*4));
+ S.trump=null;S.exp=null;S.trick=[];S.tk=[0,0];S.won=[0,0];S.n=0;S.phase='trump';S.turn=S.ch;pick=false;
+ S.msg=S.names[S.ch]+' is choosing trumps…';sync();botStep()}
+function setTrump(s,e){S.trump=s;if(e){S.exp=e;S.msg=S.names[S.ch]+' exposed '+RK[e.r]+SU[e.s]+' – trumps '+SU[s]}else S.msg='Trumps: '+SU[s];
+ S.h=S.h.map((h,i)=>h.concat(S.later[i]));S.h.forEach(h=>h.sort((a,b)=>a.s-b.s||a.r-b.r));S.phase='play';S.turn=S.ch;pick=false;sync();botStep()}
+function play(t,i){const c=S.h[t][i];if(!legal(t,c))return;S.h[t].splice(i,1);S.trick.push({s:t,c});
+ if(S.trick.length==4){S.phase='wait';sync();setTimeout(endTrick,1400)}else{S.turn=(t+1)%4;sync();botStep()}}
+function endTrick(){const l=S.trick[0].c.s;const w=S.trick.reduce((a,b)=>val(b.c,l)>val(a.c,l)?b:a).s,tm=w%2;
+ S.tk[tm]++;S.won[tm]++;S.n++;S.trick=[];S.msg=S.names[w]+' wins the trick';
+ if(S.tk[tm]==5||S.n==8)return endRound();S.turn=w;S.phase='play';sync();botStep()}
+function endRound(){const[a,b]=S.tk;if(a==b){S.pot=2;S.msg='Draw! 2 coins held for the next winner'}
+ else{const w=a>b?0:1,c=(S.ch%2==w?1:2)+S.pot;S.got[w]+=c;S.msg=`Team ${w?'B':'A'} wins ${c} coin${c>1?'s':''}`;S.pot=0}
+ S.ch=(S.ch+1)%4;if(S.got[0]>=10||S.got[1]>=10){S.phase='over';S.msg=(S.got[0]>=10?'Team A (you & partner)':'Team B')+' wins the game!';return sync()}
+ S.phase='roundEnd';sync();setTimeout(deal,4500)}
+function handle(seat,a){if(S.phase=='trump'&&seat==S.ch){if(a.t=='suit')setTrump(a.s);if(a.t=='pick'){const c=S.later[seat][a.i];setTrump(c.s,c)}}
+ if(S.phase=='play'&&S.turn==seat&&a.t=='play')play(seat,a.i)}
+function act(a){host?handle(my,a):room.emit('act',{seat:my,a})}
+function botStep(){if(!host)return;clearTimeout(bt);const t=S.turn;if(S.human[t])return;
+ if(S.phase=='trump')bt=setTimeout(()=>{const sc=[0,1,2,3].map(s=>S.h[t].reduce((a,c)=>a+(c.s==s?3+c.r/4:0),0));setTrump(sc.indexOf(Math.max(...sc)))},1300);
+ else if(S.phase=='play')bt=setTimeout(()=>{const h=S.h[t],L=h.map((c,i)=>({c,i})).filter(x=>legal(t,x.c));let p;
+  if(!S.trick.length){const nt=L.filter(x=>x.c.s!=S.trump);p=(nt.length?nt:L).reduce((a,b)=>b.c.r>a.c.r?b:a)}
+  else{const l=S.trick[0].c.s,best=S.trick.reduce((a,b)=>val(b.c,l)>val(a.c,l)?b:a),lo=(A)=>A.reduce((a,b)=>val(b.c,l)<val(a.c,l)?b:a),win=L.filter(x=>val(x.c,l)>val(best.c,l));
+   p=best.s%2==t%2||!win.length?lo(L):lo(win)}
+  play(t,p.i)},1000)}
+function render(){if(!S)return lobby();
+ if(S.phase=='lobby'){app.innerHTML=`<div id="lob"><div><h1>Room ${code}</h1><div>Share the link & this code. Friends join as your partner first.</div><div style="margin:12px;line-height:1.8">${[0,2,1,3].map(i=>`${i%2?'Opponent':i?'Partner':'You'}: ${S.human[i]?esc(S.names[i]):'<i>🤖 bot</i>'}`).join('<br>')}</div>${host?'<button id="go">Start (bots fill empty seats)</button>':'Waiting for host…'}</div></div><div id="ft">made by Minada</div>`;if(host)$('#go').onclick=start;return}
+ const P=s=>(s-my+4)%4,seat=p=>(p+my)%4,ts=my%2,oth=1-ts;
+ let h=`<div id="tl" class="hud">Trumps<br><b style="font-size:22px">${S.trump!=null?SU[S.trump]:'?'}</b>${S.exp?'<br>exposed '+RK[S.exp.r]+SU[S.exp.s]:''}</div>
+ <div id="tr" class="hud">Won (${S.got[ts]}/10)<br>${coins(S.got[ts],oth)}<br><small>Opp: ${S.got[oth]}</small></div>
+ <div id="bl" class="hud"><div>Us <b>${S.tk[ts]}</b>${stk(S.won[ts]).replace(/class="mini"/g,'class="mini"')}</div><div>Them <b>${S.tk[oth]}</b>${stk(S.won[oth]).replace(/class="mini"/g,'class="mini o"')}</div></div>
+ <div id="br" class="hud">Held<br>${S.pot?coins(1,0)+coins(1,1):'–'}</div><div id="msg">${esc(S.msg)}</div>`;
+ for(let p=0;p<4;p++){const s=seat(p);h+=`<div class="nm n${p} ${S.turn==s&&S.phase!='roundEnd'?'on':''}">${esc(S.names[s])}${S.human[s]?'':' 🤖'}${S.ch==s?' ★':''}</div>`;
+  if(p)h+=`<div class="op p${p}">${S.h[s].map(()=>back()).join('')}</div>`}
+ const L=S.trick[0]?S.trick[0].c.s:null;
+ h+=`<div id="mid">${S.trick.map((t,i)=>card(t.c,`t${P(t.s)} ${i==S.trick.length-1&&S.trick.length>prevLen?'in'+P(t.s):''}`)).join('')}</div>`;prevLen=S.trick.length;
+ const mine=S.h[my]||[],myturn=S.phase=='play'&&S.turn==my;
+ h+=`<div class="hand">${mine.map((c,i)=>card(c,myturn?(legal(my,c)?'ok':'no'):'',i)).join('')}</div>`;
+ if(S.phase=='trump'&&S.ch==my)h+=pick?`<div class="pan">Reveal one of your next cards – it will be shown to all<br>${[5,6,7,8].map((n,i)=>`<button data-p="${i}">#${n}</button>`).join('')}<br><button data-b="1">Back</button></div>`
+  :`<div class="pan">Choose trumps<br>${SU.map((s,i)=>`<button class="su ${i==1||i==2?'r':''}" data-s="${i}">${s}</button>`).join('')}<br><button data-k="1">Can't choose? Pick from 5th–8th card</button></div>`;
+ if(S.phase=='over')h+=`<div class="pan"><h2 style="margin:0;color:var(--g)">${esc(S.msg)}</h2>${host?'<button onclick="S.got=[0,0];S.pot=0;deal()">Play again</button>':''}</div>`;
+ h+=`<div id="ft">made by Minada</div>`;app.innerHTML=h;
+ app.querySelectorAll('.hand .ok').forEach(e=>e.onclick=()=>act({t:'play',i:+e.dataset.i}));
+ app.querySelectorAll('[data-s]').forEach(e=>e.onclick=()=>act({t:'suit',s:+e.dataset.s}));
+ app.querySelectorAll('[data-p]').forEach(e=>e.onclick=()=>act({t:'pick',i:+e.dataset.p}));
+ app.querySelectorAll('[data-k]').forEach(e=>e.onclick=()=>{pick=true;render()});app.querySelectorAll('[data-b]').forEach(e=>e.onclick=()=>{pick=false;render()})}
+lobby();
+</script></body></html>
